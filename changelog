@@ -1,5 +1,5 @@
-pistache (0.2.2.20230803-1) UNRELEASED; urgency=low
+pistache (0.2.7.20240103-1) UNRELEASED; urgency=low
 
   * Initial release. Closes: #929593
 
- -- Kip Warner <kip@thevertigo.com>  Sat, 09 Sep 2023 06:04:01 +0000
+ -- Kip Warner <kip@thevertigo.com>  Tue, 06 Feb 2024 21:41:34 +0000
