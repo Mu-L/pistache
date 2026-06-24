@@ -449,6 +449,26 @@ TEST(segment_tree_node_test, test_resource_sanitize)
     ASSERT_EQ(SegmentTreeNode::sanitizeResource("/path/to///////:place"), "path/to/:place");
 }
 
+TEST(segment_tree_node_test, test_resource_sanitize_long_slash_run)
+{
+    std::string path = "/path";
+    path.append(200000, '/');
+    path.append("to/");
+
+    ASSERT_EQ(SegmentTreeNode::sanitizeResource(path), "path/to");
+
+    std::string leading_slashes;
+    leading_slashes.append(200000, '/');
+    leading_slashes.append("hello/");
+
+    ASSERT_EQ(SegmentTreeNode::sanitizeResource(leading_slashes), "hello");
+
+    std::string trailing_slashes = "/path";
+    trailing_slashes.append(200000, '/');
+
+    ASSERT_EQ(SegmentTreeNode::sanitizeResource(trailing_slashes), "path");
+}
+
 namespace
 {
     class WaitHelper
