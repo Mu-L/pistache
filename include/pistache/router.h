@@ -13,7 +13,6 @@
 #pragma once
 
 #include <memory>
-#include <regex>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -144,13 +143,6 @@ namespace Pistache::Rest
         std::shared_ptr<SegmentTreeNode> splat_;
         std::shared_ptr<Route> route_;
 
-        /**
-         * Common web servers (nginx, httpd, IIS) collapse multiple
-         * forward slashes to a single one. This regex is used to
-         * obtain the same result.
-         */
-        static std::regex multiple_slash;
-
         static SegmentType getSegmentType(const std::string_view& fragment);
 
         /**
@@ -178,7 +170,8 @@ namespace Pistache::Rest
 
         /**
          * Sanitizes a resource URL by removing any duplicate slash, leading
-         * slash and trailing slash.
+         * slash and trailing slash. Common web servers (nginx, httpd, IIS)
+         * collapse multiple forward slashes to a single one.
          * @param path URL to sanitize.
          * @return Sanitized URL.
          */

@@ -59,8 +59,6 @@ namespace Pistache::Rest
 
     std::vector<TypedParam> Request::splat() const { return splats_; }
 
-    std::regex SegmentTreeNode::multiple_slash = std::regex("//+", std::regex_constants::optimize);
-
     SegmentTreeNode::SegmentTreeNode()
         : resource_ref_()
         , fixed_()
@@ -121,8 +119,15 @@ namespace Pistache::Rest
 
     std::string SegmentTreeNode::sanitizeResource(const std::string& path)
     {
-        const auto& dup = std::regex_replace(path, SegmentTreeNode::multiple_slash,
-                                             std::string("/"));
+        std::string dup;
+        dup.reserve(path.size());
+
+        for (const char c : path)
+        {
+            if (c != '/' || dup.empty() || dup.back() != '/')
+                dup.push_back(c);
+        }
+
         if (dup[dup.length() - 1] == '/')
         {
             return dup.substr(1, dup.length() - 2);
